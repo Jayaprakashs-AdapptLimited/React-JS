@@ -49,23 +49,76 @@ const pizzaData = [
 
 function App() {
   return (
-    <div>
-      <h1> Hello React </h1>
-      <Pizza />
+    <div className="container">
+      <Header />
+      <Menu />
+      <Footer />
     </div>
   );
 }
 
-function Pizza() {
+function Header() {
+  // const style={color: 'red', fontSize: 32, textTransform: 'uppercase'};
+  const style = {};
   return (
-    <div> 
-      <img src="pizzas/spinaci.jpg" alt="spinaci" />
-      <h2> Pizza Spinaci </h2>
-      <p> Tomato, mozarella, spinach, and ricotta cheese</p>
-    </div>
-  )
+    <header className="header">
+      <h1 style={style}> Pizza </h1>;
+    </header>
+  );
 }
 
+function Menu() {
+  return (
+    <main className="menu">
+      <h2> Our Menu </h2>
+
+      {pizzaData.map(pizza => {
+        return <Pizza pizzaObj={pizza} key={pizza.name}/>;
+      })}
+      {/* <Pizza
+        name="Pizza Spinaci"
+        ingredients="Tomato, mozarella, spinach, and ricotta cheese"
+        photoName="pizzas/spinaci.jpg"
+        price={10}
+      />
+      <Pizza 
+        name="Pizza Spinaci"
+        ingredients="Tomato, mozarella, spinach, and ricotta cheese"
+        photoName="pizzas/spinaci.jpg"
+        price={10}
+      /> */}
+    </main>
+  );
+}
+
+function Pizza(props) {
+  // console.log(props);
+  return (
+    <div>
+      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+      <h3> {props.pizzaObj.name} </h3>
+      <p> {props.pizzaObj.ingredients}</p>
+      <p> {props.pizzaObj.price}</p>
+    </div>
+  );
+}
+
+function Footer() {
+  const date = new Date().toLocaleTimeString();
+  const hour = new Date().getHours();
+  const openHour = 10;
+  const closeHour = 22;
+  const isOpen = hour >= openHour && hour <= closeHour;
+  console.log(isOpen);
+
+  // if(hour >= openHour && hour <= closeHour) alert(`We're Currently open`);
+  // else alert(`Sorry, We're closed`);
+  return (
+    <div className="footer">
+      <footer> {date} We're Currently open </footer>
+    </div>
+  );
+}
 
 // React v18
 const root = ReactDOM.createRoot(document.getElementById("root"));
